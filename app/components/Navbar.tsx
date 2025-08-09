@@ -17,7 +17,6 @@ export default function Navbar() {
     { href: '/contact', label: 'Contact' },
   ];
 
-  // Auto-close menu when route changes
   useEffect(() => {
     setMenuOpen(false);
   }, [pathname]);
@@ -25,19 +24,19 @@ export default function Navbar() {
   return (
     <nav
       role="navigation"
-      className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm"
+      className="bg-white sticky top-0 z-50 border-b border-gray-200"
     >
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
         {/* Logo */}
         <Link
           href="/"
-          className="font-display text-primary font-bold text-2xl hover:text-accent transition-colors"
+          className="font-serif text-gray-900 text-2xl font-semibold hover:text-blue-600 transition-colors"
         >
           RCM
         </Link>
 
-        {/* Desktop menu */}
-        <ul className="hidden md:flex space-x-8 font-display text-primary">
+        {/* Desktop Menu */}
+        <ul className="hidden md:flex space-x-6 font-medium text-gray-700">
           {links.map(({ href, label }) => {
             const isActive = pathname === href;
             return (
@@ -45,24 +44,27 @@ export default function Navbar() {
                 <Link
                   href={href}
                   className={clsx(
-                    'hover:text-accent transition-colors duration-200',
-                    isActive && 'font-bold text-accent underline underline-offset-4'
+                    'relative transition-colors duration-200 hover:text-blue-600',
+                    isActive && 'text-blue-600 font-semibold'
                   )}
                   aria-current={isActive ? 'page' : undefined}
                 >
                   {label}
+                  {isActive && (
+                    <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-blue-600"></span>
+                  )}
                 </Link>
               </li>
             );
           })}
         </ul>
 
-        {/* Mobile menu button */}
+        {/* Mobile Menu Button */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
           aria-expanded={menuOpen}
-          className="md:hidden text-primary focus:outline-none focus:ring-2 focus:ring-accent rounded"
+          className="md:hidden text-gray-700 focus:outline-none hover:text-blue-600"
         >
           <svg
             className="w-6 h-6"
@@ -82,10 +84,10 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile Menu */}
       <div
         className={clsx(
-          'md:hidden bg-white border-t border-gray-200 shadow-soft origin-top transition-all duration-300',
+          'md:hidden bg-white border-t border-gray-200 transition-all duration-300 ease-in-out',
           menuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
         )}
       >
@@ -97,8 +99,8 @@ export default function Navbar() {
                 <Link
                   href={href}
                   className={clsx(
-                    'block px-4 py-2 rounded hover:bg-accent hover:text-white transition-colors duration-200',
-                    isActive && 'bg-accent text-white font-bold'
+                    'block px-4 py-2 rounded-md hover:bg-blue-50 hover:text-blue-600 transition-colors',
+                    isActive && 'text-blue-600 font-semibold bg-blue-50'
                   )}
                   aria-current={isActive ? 'page' : undefined}
                 >

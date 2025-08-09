@@ -1,75 +1,90 @@
 // app/services/page.tsx
-'use client';
+'use client'
 
-import { FileText, CheckCircle2, CreditCard, ShieldCheck, Stethoscope, ClipboardList } from 'lucide-react';
-import FadeIn from '@/components/FadeIn'; // Adjust path if needed
+import Image from 'next/image'
+import { motion } from 'framer-motion'
 
-const services = [
-  {
-    icon: <FileText className="w-10 h-10 text-primary mb-4 mx-auto" />,
-    title: 'Medical Coding',
-    description:
-      'Accurate CPT, ICD-10, and HCPCS coding performed by certified coders to ensure compliance and maximize reimbursements.',
-  },
-  {
-    icon: <CheckCircle2 className="w-10 h-10 text-accent mb-4 mx-auto" />,
-    title: 'Claims Auditing',
-    description:
-      'Comprehensive review of submitted claims to identify errors, reduce denials, and improve first-pass acceptance rates.',
-  },
-  {
-    icon: <CreditCard className="w-10 h-10 text-highlight mb-4 mx-auto" />,
-    title: 'Billing Services',
-    description:
-      'End-to-end medical billing solutions to streamline collections and improve revenue cycle management.',
-  },
-  {
-    icon: <ShieldCheck className="w-10 h-10 text-primary mb-4 mx-auto" />,
-    title: 'Compliance Consulting',
-    description:
-      'HIPAA-compliant processes with expert guidance to maintain regulatory standards and avoid penalties.',
-  },
-  {
-    icon: <Stethoscope className="w-10 h-10 text-accent mb-4 mx-auto" />,
-    title: 'Specialty Coding',
-    description:
-      'Tailored coding solutions for specialties like cardiology, oncology, orthopedics, and more.',
-  },
-  {
-    icon: <ClipboardList className="w-10 h-10 text-highlight mb-4 mx-auto" />,
-    title: 'Denial Management',
-    description:
-      'Proactive tracking and resolution of denied claims to recover lost revenue efficiently.',
-  },
-];
+export default function ServicesSection() {
+  const services = [
+    {
+      title: 'Medical Billing',
+      description:
+        'We handle end-to-end medical billing with accuracy, ensuring faster reimbursements and reduced claim denials.',
+      img: '/images/billing.jpg',
+    },
+    {
+      title: 'Revenue Cycle Management',
+      description:
+        'Comprehensive RCM solutions that optimize your cash flow, improve patient experience, and ensure compliance.',
+      img: '/images/rcm.jpg',
+    },
+    {
+      title: 'Claims Processing',
+      description:
+        'Efficient claim submission, tracking, and follow-up to maximize your revenue and minimize delays.',
+      img: '/images/claims.jpg',
+    },
+    {
+      title: 'Credentialing Services',
+      description:
+        'We streamline provider credentialing to get you onboarded with payers quickly and hassle-free.',
+      img: '/images/credentialing.jpg',
+    },
+  ]
 
-export default function ServicesPage() {
   return (
-    <main className="bg-background min-h-screen">
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-primary to-accent text-white py-28 px-6 text-center">
-        <FadeIn>
-          <h1 className="text-5xl font-display font-bold mb-4">Our Services</h1>
-          <p className="max-w-3xl mx-auto text-lg text-gray-100">
-            Comprehensive RCM solutions tailored to streamline your healthcare revenue cycle and ensure accuracy at every step.
+    <section className="bg-gradient-to-b from-gray-50 to-white py-20 font-[DM_Sans]">
+      <div className="container mx-auto px-4">
+        {/* Heading */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center mb-14"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Our Core Services
+          </h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            End-to-end healthcare revenue cycle solutions designed to improve your efficiency and profitability.
           </p>
-        </FadeIn>
-      </section>
+        </motion.div>
 
-      {/* Services Grid */}
-      <section className="py-20 px-6 max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
-          {services.map(({ icon, title, description }, idx) => (
-            <FadeIn key={idx}>
-              <div className="bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center text-center text-gray-800 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 h-full">
-                {icon}
-                <h3 className="text-xl font-semibold mb-3">{title}</h3>
-                <p className="text-sm text-gray-600">{description}</p>
+        {/* Services Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {services.map((service, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1, duration: 0.6 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow overflow-hidden group"
+            >
+              {/* Image */}
+              <div className="relative h-64 w-full overflow-hidden">
+                <Image
+                  src={service.img}
+                  alt={service.title}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                />
               </div>
-            </FadeIn>
+
+              {/* Text */}
+              <div className="p-6">
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                  {service.title}
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  {service.description}
+                </p>
+              </div>
+            </motion.div>
           ))}
         </div>
-      </section>
-    </main>
-  );
+      </div>
+    </section>
+  )
 }
