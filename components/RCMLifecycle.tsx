@@ -1,7 +1,7 @@
 // components/RcmLifecycleCircle.tsx
 'use client';
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import {
   UserPlus,
   FileText,
@@ -36,20 +36,24 @@ export default function RcmLifecycleCircle() {
   const [selected, setSelected] = useState<number>(0);
   const [hovered, setHovered] = useState<number | null>(null);
   const [positions, setPositions] = useState<{ x: number; y: number }[]>([]);
-  const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const [size, setSize] = useState({ width: 560, height: 560 });
 
-  // compute positions (circle) based on container size
+  const prefersReducedMotion =
+    typeof window !== 'undefined' &&
+    window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   const computePositions = useCallback(() => {
     const root = containerRef.current;
     if (!root) return;
     const rect = root.getBoundingClientRect();
+    setSize({ width: rect.width, height: rect.height });
     const w = rect.width;
     const h = rect.height;
     const cx = w / 2;
     const cy = h / 2;
-    const radius = Math.min(w, h) / 2 - 120; // leave room for card size
+    const radius = Math.min(w, h) / 2 - 120;
     const pts = STAGES.map((_, i) => {
-      // start at top (-90deg)
       const angle = (i / STAGES.length) * Math.PI * 2 - Math.PI / 2;
       const x = cx + radius * Math.cos(angle);
       const y = cy + radius * Math.sin(angle);
@@ -58,7 +62,6 @@ export default function RcmLifecycleCircle() {
     setPositions(pts);
   }, []);
 
-  // initialize + observe resize
   useEffect(() => {
     computePositions();
     if (!containerRef.current) return;
@@ -67,7 +70,6 @@ export default function RcmLifecycleCircle() {
     return () => ro.disconnect();
   }, [computePositions]);
 
-  // keyboard navigation when focus is inside container
   useEffect(() => {
     const root = containerRef.current;
     if (!root) return;
@@ -91,54 +93,67 @@ export default function RcmLifecycleCircle() {
     return () => root.removeEventListener('keydown', onKey);
   }, []);
 
-  // helper to build curved SVG path between two points (slightly bowed outward)
-  const makeCurve = (p1: { x: number; y: number }, p2: { x: number; y: number }, center: { x: number; y: number }) => {
+  const makeCurve = (
+    p1: { x: number; y: number },
+    p2: { x: number; y: number },
+    center: { x: number; y: number }
+  ) => {
     const mx = (p1.x + p2.x) / 2;
     const my = (p1.y + p2.y) / 2;
-    // outward normal from center to midpoint
     let nx = mx - center.x;
     let ny = my - center.y;
     const len = Math.sqrt(nx * nx + ny * ny) || 1;
     nx = nx / len;
     ny = ny / len;
-    const bow = 64; // curve strength (tweakable)
+    const bow = 64;
     const cx = mx + nx * bow;
     const cy = my + ny * bow;
-    return `M ${p1.x.toFixed(1)} ${p1.y.toFixed(1)} Q ${cx.toFixed(1)} ${cy.toFixed(1)} ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
+    return `M ${p1.x.toFixed(1)} ${p1.y.toFixed(1)} Q ${cx.toFixed(
+      1
+    )} ${cy.toFixed(1)} ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
   };
 
-  // center point for curves
-  const centerPoint = positions.length ? { x: positions[0].x * 0 + positions[0].x * 0 + (containerRef.current!.getBoundingClientRect().width / 2), y: containerRef.current!.getBoundingClientRect().height / 2 } : { x: 0, y: 0 };
+  const centerPoint = { x: size.width / 2, y: size.height / 2 };
+
+  const curves = useMemo(() => {
+    if (!positions.length) return [];
+    return positions.map((p, i) => {
+      const next = positions[(i + 1) % positions.length];
+      return makeCurve(p, next, centerPoint);
+    });
+  }, [positions, centerPoint]);
 
   return (
     <section className="py-16 px-6 bg-gradient-to-b from-white to-slate-50">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        {/* Circle + SVG paths (desktop) */}
+      {/* Desktop version */}
+      <div className="max-w-7xl mx-auto hidden lg:grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        {/* Circle */}
         <div className="w-full flex items-center justify-center">
           <div
             ref={containerRef}
             tabIndex={0}
             aria-label="RCM lifecycle visual"
-            className="relative w-[560px] h-[560px] lg:w-[560px] lg:h-[560px] rounded-full"
-            // focus ring handled by card buttons inside
+            className="relative w-[560px] h-[560px] rounded-full"
           >
-            {/* subtle background ring */}
             <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-white to-slate-100 shadow-inner pointer-events-none" />
 
-            {/* svg connecting paths */}
-            <svg className="absolute inset-0 w-full h-full" viewBox={`0 0 ${containerRef.current?.getBoundingClientRect().width ?? 560} ${containerRef.current?.getBoundingClientRect().height ?? 560}`} preserveAspectRatio="none" aria-hidden>
+            {/* Paths */}
+            <svg
+              className="absolute inset-0 w-full h-full"
+              viewBox={`0 0 ${size.width} ${size.height}`}
+              preserveAspectRatio="none"
+              aria-hidden
+            >
               <defs>
                 <linearGradient id="pathGrad" x1="0" x2="1">
                   <stop offset="0%" stopColor="#c7d2fe" stopOpacity="0.9" />
                   <stop offset="50%" stopColor="#a78bfa" stopOpacity="0.9" />
                   <stop offset="100%" stopColor="#7c3aed" stopOpacity="0.9" />
                 </linearGradient>
-
                 <linearGradient id="activeGrad" x1="0" x2="1">
                   <stop offset="0%" stopColor="#60a5fa" stopOpacity="1" />
                   <stop offset="100%" stopColor="#7c3aed" stopOpacity="1" />
                 </linearGradient>
-
                 <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
                   <feGaussianBlur stdDeviation="8" result="coloredBlur" />
                   <feMerge>
@@ -148,12 +163,13 @@ export default function RcmLifecycleCircle() {
                 </filter>
               </defs>
 
-              {/* draw curved segments between each stage (i -> i+1), last connects to first */}
               {positions.length > 0 &&
-                positions.map((p, i) => {
-                  const next = positions[(i + 1) % positions.length];
-                  const path = makeCurve(p, next, { x: containerRef.current!.getBoundingClientRect().width / 2, y: containerRef.current!.getBoundingClientRect().height / 2 });
-                  const isActive = hovered === i || hovered === (i + 1) % positions.length || selected === i || selected === (i + 1) % positions.length;
+                curves.map((path, i) => {
+                  const isActive =
+                    hovered === i ||
+                    hovered === (i + 1) % positions.length ||
+                    selected === i ||
+                    selected === (i + 1) % positions.length;
                   return (
                     <path
                       key={i}
@@ -180,7 +196,6 @@ export default function RcmLifecycleCircle() {
                 return (
                   <button
                     key={s.id}
-                    role="button"
                     aria-pressed={isSelected}
                     aria-label={`${s.title} — ${s.short}`}
                     onClick={() => setSelected(i)}
@@ -188,7 +203,7 @@ export default function RcmLifecycleCircle() {
                     onMouseLeave={() => setHovered((h) => (h === i ? null : h))}
                     onFocus={() => setHovered(i)}
                     onBlur={() => setHovered((h) => (h === i ? null : h))}
-                    className={`absolute w-40 h-40 rounded-2xl p-3 text-left focus:outline-none shadow-lg
+                    className={`absolute w-40 h-40 rounded-2xl p-3 text-left shadow-lg
                       ${isSelected ? 'ring-4 ring-indigo-200' : ''}
                       ${prefersReducedMotion ? '' : 'transition-transform duration-220'}
                     `}
@@ -199,9 +214,10 @@ export default function RcmLifecycleCircle() {
                       background: 'rgba(255,255,255,0.6)',
                       backdropFilter: 'blur(6px)',
                       border: '1px solid rgba(255,255,255,0.5)',
-                      boxShadow: isSelected || isHovered ? '0 18px 40px rgba(2,6,23,0.12)' : '0 6px 20px rgba(2,6,23,0.06)',
+                      boxShadow: isSelected || isHovered
+                        ? '0 18px 40px rgba(2,6,23,0.12)'
+                        : '0 6px 20px rgba(2,6,23,0.06)',
                     }}
-                    // keyboard nav order
                   >
                     <div className="flex flex-col items-start gap-2">
                       <div className={`w-12 h-12 rounded-lg flex items-center justify-center bg-gradient-to-br ${s.color} text-white shadow-sm`}>
@@ -213,11 +229,15 @@ export default function RcmLifecycleCircle() {
                   </button>
                 );
               })}
-            {/* central hub */}
+
+            {/* Center Hub */}
             <div
               className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-44 h-44 rounded-full flex flex-col items-center justify-center"
-              style={{ background: 'linear-gradient(180deg,#fff,#f8fafc)', boxShadow: '0 10px 30px rgba(2,6,23,0.08)', border: '1px solid rgba(0,0,0,0.04)' }}
-              aria-hidden
+              style={{
+                background: 'linear-gradient(180deg,#fff,#f8fafc)',
+                boxShadow: '0 10px 30px rgba(2,6,23,0.08)',
+                border: '1px solid rgba(0,0,0,0.04)',
+              }}
             >
               <div className="text-lg font-bold text-slate-700">RCM</div>
               <div className="text-xs text-slate-500">Revenue Cycle</div>
@@ -271,22 +291,35 @@ export default function RcmLifecycleCircle() {
         </div>
       </div>
 
-      {/* Mobile fallback: stacked list with subtle connectors */}
-      <div className="mt-12 lg:hidden max-w-3xl mx-auto">
-        <ol className="space-y-6">
-          {STAGES.map((s, i) => (
-            <li key={s.id} className="flex items-start gap-4">
-              <div className={`w-12 h-12 rounded-lg flex items-center justify-center bg-gradient-to-br ${s.color} text-white flex-shrink-0`}>
-                <s.Icon className="w-5 h-5" />
-              </div>
-              <div>
-                <div className="text-sm font-semibold text-gray-900">{s.title}</div>
-                <div className="text-xs text-gray-500">{s.short}</div>
-              </div>
-            </li>
-          ))}
-        </ol>
+      {/* Mobile: Modern vertical timeline */}
+     {/* Mobile: Two-column grid like screenshot */}
+{/* Mobile: Modern grid layout with heading */}
+<div className="mt-12 lg:hidden max-w-md mx-auto px-4">
+  <h2 className="text-2xl font-bold text-center text-gray-900">
+    RCM Lifecycle
+  </h2>
+  <p className="mt-2 text-sm text-center text-gray-600">
+    A streamlined process for efficient revenue cycle management
+  </p>
+
+  <div className="mt-8 grid grid-cols-2 gap-6">
+    {STAGES.map((s) => (
+      <div
+        key={s.id}
+        className="flex flex-col items-center text-center p-4 bg-white rounded-xl shadow border border-gray-100"
+      >
+        <div className="w-16 h-16 rounded-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 shadow-inner">
+          <s.Icon className="w-8 h-8 text-gray-700" />
+        </div>
+        <h4 className="mt-3 text-sm font-semibold text-gray-900">{s.title}</h4>
+        <p className="mt-1 text-xs text-gray-500">{s.short}</p>
       </div>
+    ))}
+  </div>
+</div>
+
+
+
     </section>
   );
 }
