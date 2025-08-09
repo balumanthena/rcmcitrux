@@ -47,15 +47,6 @@ export default function Hero() {
       aria-label="Revenue Cycle Management hero"
       className="relative py-12 md:py-20 bg-white"
     >
-      {/* Background Glow */}
-      <motion.div
-        aria-hidden
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.22, y: [0, 18, 0] }}
-        transition={{ duration: 9, repeat: Infinity, delay: 1.5, ease: 'easeInOut' }}
-        className="pointer-events-none absolute -right-36 top-40 w-80 h-80 rounded-full bg-gradient-to-tr from-cyan-300 via-blue-300 to-indigo-300 filter blur-3xl"
-      />
-
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 items-center">
           
@@ -72,11 +63,11 @@ export default function Hero() {
               className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight text-slate-900"
             >
               Transform your{' '}
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-pink-600">
+              <span className="text-indigo-600">
                 RCM Health
               </span>
               <br className="hidden sm:inline" /> operations with{' '}
-              <span className="whitespace-nowrap bg-gradient-to-r from-amber-200/70 to-rose-200/40 px-3 py-1 rounded-full text-xs font-medium text-amber-900 ml-3">
+              <span className="whitespace-nowrap bg-amber-100 px-3 py-1 rounded-full text-xs font-medium text-amber-900 ml-3">
                 faster claims • happier patients
               </span>
             </motion.h1>
@@ -97,7 +88,7 @@ export default function Hero() {
             >
               <Link
                 href="#get-started"
-                className="group inline-flex items-center gap-3 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-3 text-white font-semibold shadow-lg hover:shadow-2xl transform hover:-translate-y-0.5 transition"
+                className="group inline-flex items-center gap-3 rounded-2xl bg-indigo-600 px-6 py-3 text-white font-semibold shadow-lg hover:shadow-2xl transform hover:-translate-y-0.5 transition"
                 aria-label="Get started with RCM"
               >
                 Get Started
@@ -106,7 +97,7 @@ export default function Hero() {
 
               <Link
                 href="#learn-more"
-                className="inline-flex items-center gap-2 rounded-2xl px-6 py-3 border border-indigo-200 text-indigo-700 font-medium hover:bg-indigo-50 transition"
+                className="inline-flex items-center gap-2 rounded-2xl px-6 py-3 border border-slate-300 text-slate-700 font-medium hover:bg-slate-50 transition"
               >
                 Learn More
               </Link>
@@ -121,7 +112,7 @@ export default function Hero() {
               {['99.9% claim accuracy', 'Faster reimbursements', 'End-to-end security'].map((t) => (
                 <li
                   key={t}
-                  className="inline-flex items-center gap-2 bg-white/90 backdrop-blur-sm px-3 py-2 rounded-full text-sm text-slate-700 shadow-sm"
+                  className="inline-flex items-center gap-2 bg-white border border-slate-200 px-3 py-2 rounded-full text-sm text-slate-700 shadow-sm"
                 >
                   <Check className="h-4 w-4 text-emerald-500" />
                   <span>{t}</span>
@@ -146,7 +137,7 @@ export default function Hero() {
               }}
               className="relative w-full max-w-md md:max-w-lg rounded-3xl shadow-2xl overflow-hidden"
             >
-              <div className="absolute inset-0 -z-10 bg-gradient-to-tr from-white to-indigo-50 opacity-60" />
+              <div className="absolute inset-0 -z-10 bg-white" />
 
               <div className="relative w-full h-80 md:h-[420px]">
                 <Image
@@ -158,14 +149,14 @@ export default function Hero() {
                   priority
                 />
 
-                <div className="absolute inset-0 bg-gradient-to-t from-black/28 to-transparent" />
+                <div className="absolute inset-0 bg-black/10" />
 
                 {/* Card Overlay */}
                 <motion.div
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.3 }}
-                  className="absolute left-6 bottom-6 w-56 rounded-xl bg-white/95 backdrop-blur-md p-4 shadow-lg"
+                  className="absolute left-6 bottom-6 w-56 rounded-xl bg-white p-4 shadow-lg"
                 >
                   <div className="flex items-center justify-between">
                     <div>
@@ -184,7 +175,7 @@ export default function Hero() {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, delay: 0.45 }}
-                  className="absolute right-6 top-6 rounded-full bg-white/95 px-3 py-2 text-sm font-semibold shadow-md"
+                  className="absolute right-6 top-6 rounded-full bg-white px-3 py-2 text-sm font-semibold shadow-md"
                 >
                   99.9% Accuracy
                 </motion.div>
