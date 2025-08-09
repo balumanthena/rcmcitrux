@@ -8,52 +8,73 @@ import clsx from 'clsx';
 export default function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
 
   const links = [
     { href: '/', label: 'Home' },
-    { href: '/services', label: 'Services' },
-    { href: '/dashboard', label: 'Dashboard' },
+    {
+      href: '/services',
+      label: 'Services',
+      children: [
+        { href: '/services/medical-coding', label: 'Medical Coding' },
+        { href: '/services/medical-billing', label: 'Medical Billing' },
+        { href: '/services/auditing', label: 'Auditing' },
+        { href: '/services/clinical-documentation-improvement', label: 'Clinical Documentation Improvement' },
+        { href: '/services/risk-adjustment', label: 'Risk Adjustment' },
+      ],
+    },
     { href: '/about', label: 'About' },
     { href: '/contact', label: 'Contact' },
   ];
 
   useEffect(() => {
     setMenuOpen(false);
+    setServicesOpen(false);
   }, [pathname]);
 
   return (
-    <nav
-      role="navigation"
-      className="bg-white sticky top-0 z-50 border-b border-gray-200"
-    >
-      <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+    <nav role="navigation" className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}
         <Link
           href="/"
-          className="font-serif text-gray-900 text-2xl font-semibold hover:text-blue-600 transition-colors"
+          className="font-serif text-gray-900 text-2xl tracking-wide hover:text-blue-700 transition-colors"
         >
           RCM
         </Link>
 
         {/* Desktop Menu */}
-        <ul className="hidden md:flex space-x-6 font-medium text-gray-700">
-          {links.map(({ href, label }) => {
-            const isActive = pathname === href;
+        <ul className="hidden md:flex space-x-6 font-medium text-gray-800">
+          {links.map(({ href, label, children }) => {
+            const isActive = pathname === href || (children && children.some(c => pathname === c.href));
             return (
-              <li key={href}>
+              <li key={href} className="relative group">
                 <Link
                   href={href}
                   className={clsx(
-                    'relative transition-colors duration-200 hover:text-blue-600',
-                    isActive && 'text-blue-600 font-semibold'
+                    'pb-1 transition-all duration-200 hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700',
+                    isActive && 'text-blue-700 border-blue-700'
                   )}
                   aria-current={isActive ? 'page' : undefined}
                 >
                   {label}
-                  {isActive && (
-                    <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-blue-600"></span>
-                  )}
                 </Link>
+
+                {/* Dropdown */}
+                {children && (
+                  <ul className="absolute left-0 mt-2 w-64 bg-white border border-gray-200 rounded-md shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all">
+                    {children.map((child) => (
+                      <li key={child.href} className="border-b border-gray-100 last:border-none">
+                        <Link
+                          href={child.href}
+                          className="block px-5 py-2 text-gray-700 hover:bg-gray-50 hover:text-blue-700"
+                        >
+                          {child.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </li>
             );
           })}
@@ -64,7 +85,7 @@ export default function Navbar() {
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
           aria-expanded={menuOpen}
-          className="md:hidden text-gray-700 focus:outline-none hover:text-blue-600"
+          className="md:hidden text-gray-700 hover:text-blue-700"
         >
           <svg
             className="w-6 h-6"
@@ -92,20 +113,41 @@ export default function Navbar() {
         )}
       >
         <ul className="flex flex-col p-4 space-y-2">
-          {links.map(({ href, label }) => {
-            const isActive = pathname === href;
+          {links.map(({ href, label, children }) => {
+            const isActive = pathname === href || (children && children.some(c => pathname === c.href));
             return (
               <li key={href}>
-                <Link
-                  href={href}
+                <div
                   className={clsx(
-                    'block px-4 py-2 rounded-md hover:bg-blue-50 hover:text-blue-600 transition-colors',
-                    isActive && 'text-blue-600 font-semibold bg-blue-50'
+                    'flex justify-between items-center px-4 py-2 rounded hover:bg-gray-50 hover:text-blue-700',
+                    isActive && 'text-blue-700 font-semibold bg-gray-50'
                   )}
-                  aria-current={isActive ? 'page' : undefined}
+                  onClick={() => {
+                    if (children) {
+                      setServicesOpen((prev) => !prev);
+                    }
+                  }}
                 >
-                  {label}
-                </Link>
+                  <Link href={href} aria-current={isActive ? 'page' : undefined}>
+                    {label}
+                  </Link>
+                  {children && <span>{servicesOpen ? '−' : '+'}</span>}
+                </div>
+
+                {children && servicesOpen && (
+                  <ul className="pl-6 space-y-1">
+                    {children.map((child) => (
+                      <li key={child.href}>
+                        <Link
+                          href={child.href}
+                          className="block px-4 py-1 text-gray-600 hover:text-blue-700"
+                        >
+                          {child.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </li>
             );
           })}
