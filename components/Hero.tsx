@@ -1,95 +1,87 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, EffectFade } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/effect-fade';
 import { Button } from './ui/button';
-import WhyChooseUs from './WhyChooseUs';
-import ProcessSteps from './ProcessSteps';
 import FeaturesGrid from './FeaturesGrid';
+import ProcessSteps from './ProcessSteps';
 import TestimonialsCarousel from './TestimonialsCarousel';
-import { Stethoscope, FileText, ShieldCheck } from 'lucide-react';
+import WhyChooseUs from './WhyChooseUs';
+import RCMLifecycle from './RCMLifecycle';
 
-const phrases = [
-  'Reliable Medical Coding Solutions',
-  'Streamlined Revenue Cycle Management',
-  'HIPAA-Compliant & Accurate',
+const slides = [
+  {
+    url: '/images/bg1.jpg',
+    title: 'Reliable Medical Coding Solutions',
+    subtitle: 'Fast, accurate, and HIPAA-compliant services tailored for your practice.',
+  },
+  {
+    url: '/images/bg2.jpg',
+    title: 'Streamlined Revenue Cycle Management',
+    subtitle: 'Boost efficiency and maximize reimbursements effortlessly.',
+  },
+  {
+    url: '/images/bg3.jpg',
+    title: 'Accurate & Compliant Medical Coding',
+    subtitle: 'Trusted by leading healthcare providers worldwide.',
+  },
 ];
 
 export default function Hero() {
-  const [currentPhrase, setCurrentPhrase] = useState(0);
-
-  // Rotate phrases with typewriter-like delay
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentPhrase((prev) => (prev + 1) % phrases.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <>
-      {/* Hero Section */}
-      <section className="relative w-full h-screen overflow-hidden bg-gradient-to-br from-blue-50 via-white to-blue-100">
-        {/* Floating Icons */}
-        <motion.div
-          animate={{ y: [0, 20, 0] }}
-          transition={{ duration: 6, repeat: Infinity }}
-          className="absolute top-20 left-20 opacity-30"
+      {/* Fullscreen Hero Slider */}
+      <section className="relative w-full h-screen">
+        <Swiper
+          modules={[Autoplay, EffectFade]}
+          effect="fade"
+          autoplay={{ delay: 4000, disableOnInteraction: false }}
+          speed={800}
+          loop
+          className="w-full h-full"
         >
-          <Stethoscope size={80} className="text-blue-500" />
-        </motion.div>
-        <motion.div
-          animate={{ y: [0, -15, 0] }}
-          transition={{ duration: 5, repeat: Infinity }}
-          className="absolute bottom-32 right-24 opacity-30"
-        >
-          <FileText size={70} className="text-emerald-500" />
-        </motion.div>
-        <motion.div
-          animate={{ y: [0, 25, 0] }}
-          transition={{ duration: 7, repeat: Infinity }}
-          className="absolute top-1/3 right-1/3 opacity-20"
-        >
-          <ShieldCheck size={90} className="text-amber-500" />
-        </motion.div>
+          {slides.map((slide, index) => (
+            <SwiperSlide key={index}>
+              <div className="relative w-full h-full">
+                {/* Background Image */}
+                <Image
+                  src={slide.url}
+                  alt={slide.title}
+                  fill
+                  className="object-cover"
+                  priority={index === 0} // Preload first image
+                />
 
-        {/* Spotlight Hover Effect */}
-        <div className="absolute inset-0 pointer-events-none [background:radial-gradient(circle_at_var(--x)_var(--y),rgba(255,255,255,0.4),transparent_25%)]" id="spotlight"></div>
+                {/* Dark Gradient Overlay */}
+                <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/70 via-black/40 to-black/70" />
 
-        {/* Central Content */}
-        <div className="relative z-10 flex flex-col items-center justify-center h-full px-6 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="backdrop-blur-lg bg-white/40 shadow-2xl rounded-3xl p-10 max-w-3xl border border-white/30"
-          >
-            <h1 className="text-4xl md:text-6xl font-extrabold mb-6 bg-gradient-to-r from-blue-600 to-emerald-500 bg-clip-text text-transparent">
-              {phrases[currentPhrase]}
-            </h1>
-            <p className="text-lg md:text-xl text-gray-700 mb-8">
-              Empowering healthcare providers with speed, accuracy, and compliance.
-            </p>
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl shadow-lg focus:ring-4 focus:ring-blue-300 transition-all">
-              Get Started
-            </Button>
-          </motion.div>
-        </div>
+                {/* Centered Text */}
+                <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-4 sm:px-6">
+                  <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold mb-4 sm:mb-6 drop-shadow-lg">
+                    {slide.title}
+                  </h1>
+                  <p className="text-base sm:text-lg md:text-2xl max-w-3xl mb-6 sm:mb-8 drop-shadow-md">
+                    {slide.subtitle}
+                  </p>
+                  <Button className="bg-highlight hover:bg-amber-500 text-white px-6 sm:px-8 py-3 rounded-xl shadow-lg focus:ring-4 focus:ring-amber-400 transition-all">
+                    Get Started
+                  </Button>
+                </div>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </section>
 
-      {/* Rest of Sections */}
+      {/* Rest of your sections */}
       <WhyChooseUs />
+       <RCMLifecycle />
       <ProcessSteps />
       <FeaturesGrid />
       <TestimonialsCarousel />
     </>
   );
-}
-
-// Optional: spotlight mouse effect
-if (typeof window !== 'undefined') {
-  document.addEventListener('mousemove', (e) => {
-    document.documentElement.style.setProperty('--x', `${e.clientX}px`);
-    document.documentElement.style.setProperty('--y', `${e.clientY}px`);
-  });
 }

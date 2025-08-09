@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import clsx from 'clsx';
 
 export default function Navbar() {
@@ -11,14 +11,22 @@ export default function Navbar() {
 
   const links = [
     { href: '/', label: 'Home' },
-    { href: '/services', label: 'Services' }, // ✅ Added Services page
+    { href: '/services', label: 'Services' },
     { href: '/dashboard', label: 'Dashboard' },
     { href: '/about', label: 'About' },
     { href: '/contact', label: 'Contact' },
   ];
 
+  // Auto-close menu when route changes
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
+
   return (
-    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+    <nav
+      role="navigation"
+      className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm"
+    >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}
         <Link
@@ -53,6 +61,7 @@ export default function Navbar() {
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
+          aria-expanded={menuOpen}
           className="md:hidden text-primary focus:outline-none focus:ring-2 focus:ring-accent rounded"
         >
           <svg
@@ -74,30 +83,32 @@ export default function Navbar() {
       </div>
 
       {/* Mobile menu */}
-      {menuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-200 shadow-soft">
-          <ul className="flex flex-col p-4 space-y-2">
-            {links.map(({ href, label }) => {
-              const isActive = pathname === href;
-              return (
-                <li key={href}>
-                  <Link
-                    href={href}
-                    className={clsx(
-                      'block px-4 py-2 rounded hover:bg-accent hover:text-white transition-colors duration-200',
-                      isActive && 'bg-accent text-white font-bold'
-                    )}
-                    aria-current={isActive ? 'page' : undefined}
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    {label}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      )}
+      <div
+        className={clsx(
+          'md:hidden bg-white border-t border-gray-200 shadow-soft origin-top transition-all duration-300',
+          menuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
+        )}
+      >
+        <ul className="flex flex-col p-4 space-y-2">
+          {links.map(({ href, label }) => {
+            const isActive = pathname === href;
+            return (
+              <li key={href}>
+                <Link
+                  href={href}
+                  className={clsx(
+                    'block px-4 py-2 rounded hover:bg-accent hover:text-white transition-colors duration-200',
+                    isActive && 'bg-accent text-white font-bold'
+                  )}
+                  aria-current={isActive ? 'page' : undefined}
+                >
+                  {label}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </nav>
   );
 }
