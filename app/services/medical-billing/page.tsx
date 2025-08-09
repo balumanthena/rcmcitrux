@@ -1,104 +1,203 @@
-// app/services/medical-billing/page.tsx
-import Link from 'next/link';
+'use client'
+
+import React from 'react'
+import Head from 'next/head'
+import Link from 'next/link'
+import { motion } from 'framer-motion'
+import { Check, TrendingUp, ShieldCheck, ClipboardList, CreditCard, Search } from 'lucide-react'
 
 export default function MedicalBillingPage() {
+  const rcmSteps = [
+    'Provider Enrollment & Credentialing',
+    'Pre-certification & Eligibility Verification',
+    'Patient Demographics Entry',
+    'Medical Coding',
+    'Charge Entry',
+    'Claims Submission',
+    'Payment Posting',
+    'Accounts Receivables Follow-up',
+    'Denial Management',
+    'Patient Collections',
+  ]
+
+  const specialties = [
+    'Ambulance Services', 'Anesthesiology', 'Cardiology', 'Cardiovascular Surgery', 'Chiropractic', 'Dermatology', 'Durable Medical Equipment', 'Emergency Medicine', 'Endocrinology', 'Family Practice', 'General Surgery', 'Hematology / Oncology', 'Internal Medicine', 'Mental Health', 'Motor Vehicle Injuries', 'Nephrology', 'Neurology', 'Obstetrics / Gynecology', 'Orthopedics', 'Pain Management', 'Pathology', 'Pediatrics', 'Physical & Occupational Therapy', 'Podiatry', 'Psychiatry', 'Radiology', 'Sleep Disorders', 'Urology', 'Workers Compensation'
+  ]
+
+  const features = [
+    {
+      title: 'Error Reduction',
+      desc: 'Advanced billing workflows and validation checks to minimize costly errors.',
+      icon: ShieldCheck,
+    },
+    {
+      title: 'Accelerated Collections',
+      desc: 'Streamlined A/R processes to shorten payment cycles and improve cash flow.',
+      icon: TrendingUp,
+    },
+    {
+      title: 'Compliance First',
+      desc: 'Adherence to HIPAA, HITECH, CMS, and payer-specific rules at every step.',
+      icon: ClipboardList,
+    },
+    {
+      title: 'Payment Accuracy',
+      desc: 'Meticulous posting and reconciliation to ensure correct provider reimbursement.',
+      icon: CreditCard,
+    },
+    {
+      title: 'Root-Cause Auditing',
+      desc: 'Investigative review to eliminate recurring billing issues at the source.',
+      icon: Search,
+    },
+  ]
+
   return (
-    <main className="max-w-5xl mx-auto px-6 py-12">
-      <header className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">
-          Decrease Billing Errors & Collect Faster for Increased Cashflow
-        </h1>
-        <p className="mt-4">
-          <Link
-            href="/contact"
-            className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+    <>
+      <Head>
+        <title>Medical Billing & A/R Management | Citrux Health Solutions</title>
+        <meta
+          name="description"
+          content="Reduce billing errors, accelerate reimbursements, and boost cash flow with Citrux Health's medical billing and accounts receivable management services."
+        />
+      </Head>
+      <main className="max-w-7xl mx-auto px-6 py-12">
+        {/* HERO */}
+        <section className="grid gap-8 md:grid-cols-2 items-center">
+          <div>
+            <span className="inline-flex items-center px-3 py-1 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 text-white text-sm font-semibold">
+              Medical Billing & A/R Management
+            </span>
+
+            <h1 className="mt-6 text-3xl md:text-4xl font-extrabold leading-tight">
+              Reduce billing errors, accelerate reimbursements, and boost your facility's cash flow.
+            </h1>
+
+            <p className="mt-4 text-gray-700 text-base md:text-lg max-w-prose">
+              Citrux Health delivers end-to-end Revenue Cycle Management with billing precision, claim follow-through, and error remediation — tailored to the operational needs of hospitals, clinics, and specialty practices.
+            </p>
+
+            <ul className="mt-6 space-y-3">
+              <li className="flex items-start gap-3">
+                <span className="flex-shrink-0 mt-1 text-green-600"><Check size={18} /></span>
+                <span>Customized workflows for each specialty — not a one-size-fits-all template.</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="flex-shrink-0 mt-1 text-green-600"><Check size={18} /></span>
+                <span>Experienced team averaging 10+ years in multi-specialty billing.</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="flex-shrink-0 mt-1 text-green-600"><Check size={18} /></span>
+                <span>Full compliance with HIPAA, HITECH, CMS, and payer-specific requirements.</span>
+              </li>
+            </ul>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link href="/contact" className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-700 transition">
+                Schedule a 1:1 Meeting
+              </Link>
+
+              <Link href="/services/medical-coding" className="inline-flex items-center gap-2 px-5 py-3 rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 transition">
+                Explore Coding Services
+              </Link>
+            </div>
+          </div>
+
+          {/* Right Stats Card */}
+          <motion.aside
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.08 }}
+            className="relative rounded-2xl bg-white shadow-lg p-6 ring-1 ring-gray-100"
           >
-            Schedule a 1:1 Meeting
-          </Link>
-        </p>
-      </header>
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-gray-500">Serving hospitals, clinics & IPAs</p>
+                <h3 className="mt-2 text-xl font-semibold">Revenue cycle outcomes that scale</h3>
+              </div>
+              <div className="text-right">
+                <div className="text-2xl font-bold">10+ yrs</div>
+                <div className="text-xs text-gray-500">avg team experience</div>
+              </div>
+            </div>
 
-      <section className="space-y-6">
-        <h2 className="text-2xl font-semibold text-gray-800">Medical Billing & A/R Management</h2>
-        <p>
-          Your healthcare facility’s revenue cycle relies on medical billing best practices. Citrux Health Solutions provides medical billing and A/R management solutions to hospitals, physician offices, Independent Practice Associations, and a variety of other healthcare providers. Our medical billing and A/R management solutions reduce errors, improve collections speed, and increase cash flow.
-        </p>
-        <p>
-          Our all-inclusive Revenue Cycle Management solutions will give you the freedom to focus on your facility’s highest priority: providing excellent patient care. Our solutions optimize all aspects of revenue cycle management, including Provider Enrollment and Credentialing, Insurance Verification, Payment Posting, Accounts Receivables, Denial Management, and much more.
-        </p>
-        <p>
-          Our billing experts have at least 10 years of experience and always maintain HIPAA, HITECH, CMS, In-Network, and Out-of-Network compliance. We keep meticulous records of all your payments to maintain the highest standards of accuracy, privacy, and security. While other RCM companies may implement a one-size-fits-all model, Citrux customizes medical billing and A/R management solutions to meet and exceed individual facility needs.
-        </p>
-        <p>
-          Citrux is one of the top medical billing and A/R management companies—not only do our billing experts process your claims, but we investigate the source of the issue to identify and remedy any errors in your billing processes.
-        </p>
-        <p>
-          To learn more about our revenue cycle management solutions and apply the Citrux Advantage to your facility, explore our{' '}
-          <Link href="/services/medical-coding" className="text-blue-600 hover:underline">
-            medical coding solutions
-          </Link>,{' '}
-          <Link href="/services/hcc-coding" className="text-blue-600 hover:underline">
-            HCC coding solutions
-          </Link>,{' '}
-          <Link href="/services/auditing" className="text-blue-600 hover:underline">
-            ICD-10 third-party auditing
-          </Link>, and{' '}
-          <Link href="/services/clinical-documentation-improvement" className="text-blue-600 hover:underline">
-            CDI solutions
-          </Link>.
-        </p>
-      </section>
+            <div className="mt-6 grid grid-cols-2 gap-3 text-center">
+              <div className="py-3 px-2 rounded-lg bg-gray-50">
+                <div className="text-sm font-semibold">Faster Payments</div>
+              </div>
+              <div className="py-3 px-2 rounded-lg bg-gray-50">
+                <div className="text-sm font-semibold">Lower Denials</div>
+              </div>
+            </div>
 
-      <section className="mt-10">
-        <h3 className="text-xl font-semibold text-gray-800">Comprehensive End-to-End Revenue Cycle Management</h3>
-        <ul className="list-disc pl-6 mt-2 space-y-1">
-          <li>Provider Enrollment and Credentialing</li>
-          <li>Pre-certification (Authorization) & Insurance Eligibility Verification</li>
-          <li>Patient Demographic Entry</li>
-          <li>Medical Coding</li>
-          <li>Charge Entry</li>
-          <li>Claims Submission</li>
-          <li>Payment Posting</li>
-          <li>Account Receivables Follow-up</li>
-          <li>Denial Management</li>
-          <li>Patient Collections</li>
-        </ul>
-      </section>
+            <div className="mt-6 flex items-center justify-between">
+              <div className="text-sm text-gray-600">Compliance-first, accuracy-driven</div>
+              <Link href="/contact" className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-amber-500 text-white text-sm hover:bg-amber-600 transition">
+                Tell me more
+              </Link>
+            </div>
+          </motion.aside>
+        </section>
 
-      <section className="mt-10">
-        <h3 className="text-xl font-semibold text-gray-800">Specialties</h3>
-        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 list-disc pl-6 mt-2 space-y-1">
-          <li>Ambulance Services</li>
-          <li>Anesthesiology</li>
-          <li>Cardiology</li>
-          <li>Cardiovascular Surgery</li>
-          <li>Chiropractic</li>
-          <li>Dermatology</li>
-          <li>Durable Medical Equipment</li>
-          <li>Emergency Medicine</li>
-          <li>Endocrinology</li>
-          <li>Family Practice</li>
-          <li>General Surgery</li>
-          <li>Hematology / Oncology</li>
-          <li>Internal Medicine</li>
-          <li>Mental Health</li>
-          <li>Motor Vehicle Injuries</li>
-          <li>Nephrology</li>
-          <li>Neurology</li>
-          <li>Obstetrics / Gynecology</li>
-          <li>Orthopedics</li>
-          <li>Pain Management</li>
-          <li>Pathology</li>
-          <li>Pediatrics</li>
-          <li>Physical & Occupational Therapy</li>
-          <li>Podiatry</li>
-          <li>Psychiatry</li>
-          <li>Radiology</li>
-          <li>Sleep Disorders</li>
-          <li>Urology</li>
-          <li>Workers Compensation</li>
-        </ul>
-      </section>
-    </main>
-  );
+        {/* FEATURE GRID */}
+        <section className="mt-12">
+          <h2 className="text-2xl font-semibold">Why partner with Citrux</h2>
+          <p className="mt-2 text-gray-600 max-w-prose">Optimized workflows, seasoned billing experts, and measurable financial results.</p>
+
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {features.map((f) => (
+              <motion.div
+                key={f.title}
+                whileHover={{ y: -6 }}
+                className="p-5 rounded-2xl bg-white shadow-sm ring-1 ring-gray-100 flex flex-col gap-3"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-md bg-emerald-50 inline-flex">
+                    <f.icon size={20} className="text-emerald-600" />
+                  </div>
+                  <h4 className="text-lg font-medium">{f.title}</h4>
+                </div>
+                <p className="text-sm text-gray-600">{f.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        {/* RCM STEPS */}
+        <section className="mt-12">
+          <h3 className="text-xl font-semibold">Comprehensive RCM coverage</h3>
+          <p className="mt-2 text-gray-600">End-to-end processes aligned with payer rules and provider needs.</p>
+          <div className="mt-4 flex flex-wrap gap-3">
+            {rcmSteps.map((step) => (
+              <span key={step} className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-50 ring-1 ring-gray-100 text-sm">
+                <Check size={14} className="text-emerald-600" />
+                {step}
+              </span>
+            ))}
+          </div>
+        </section>
+
+        {/* SPECIALTIES */}
+        <section className="mt-12">
+          <h3 className="text-xl font-semibold">Specialties we serve</h3>
+          <p className="mt-2 text-gray-600">Multi-specialty expertise to handle diverse billing complexities.</p>
+          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+            {specialties.map((s) => (
+              <span key={s} className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-50 ring-1 ring-gray-100 text-sm">
+                <Check size={14} className="text-emerald-600" />
+                {s}
+              </span>
+            ))}
+          </div>
+        </section>
+
+        {/* Sticky contact CTA */}
+        <Link href="/contact" className="fixed right-6 bottom-6 z-50 inline-flex items-center gap-3 px-4 py-3 rounded-full shadow-lg bg-emerald-600 text-white font-medium hover:bg-emerald-700 transition">
+          <span>Schedule a 1:1</span>
+        </Link>
+
+        <div className="mt-16 text-xs text-gray-400">Citrux Health Solutions — Medical Billing & A/R Management</div>
+      </main>
+    </>
+  )
 }
