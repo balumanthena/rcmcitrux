@@ -1,25 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { motion, easeOut } from "framer-motion";
-
-const headingVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: (custom: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: custom * 0.1, type: "spring" as const, stiffness: 100 },
-  }),
-};
-
-const paragraphVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: (custom: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: 0.3 + custom * 0.2, ease: easeOut },
-  }),
-};
 
 export default function OurMission() {
   const paragraphs = [
@@ -51,7 +32,7 @@ export default function OurMission() {
 
       <div className="container mx-auto px-6 lg:px-20 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         {/* Simple Static Image */}
-        <motion.div
+        <div
           className="relative w-full h-[420px] rounded-3xl overflow-hidden shadow-2xl ring-1 ring-slate-200"
           aria-hidden="true"
         >
@@ -64,44 +45,32 @@ export default function OurMission() {
             className="object-cover"
             priority
           />
-        </motion.div>
+        </div>
 
         {/* Text Content */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.5 }}
-          className="max-w-xl"
-        >
-          <motion.h2
+        <div className="max-w-xl">
+          <h2
             aria-level={2}
             className="text-4xl sm:text-5xl md:text-5xl font-extrabold leading-tight text-slate-900 mb-8 tracking-tight select-text"
-            variants={headingVariants}
-            custom={0}
           >
             Our Mission
-          </motion.h2>
+          </h2>
 
           {/* Decorative underline */}
-          <motion.div
+          <div
             className="w-24 h-1 bg-cyan-400 rounded-full mb-12 origin-left"
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            transition={{ duration: 0.6, ease: easeOut }}
             style={{ transformOrigin: "left" }}
           />
 
           {paragraphs.map((para, i) => (
-            <motion.p
+            <p
               key={i}
               className="text-lg text-slate-700 leading-relaxed mb-6"
-              variants={paragraphVariants}
-              custom={i + 1}
             >
               {para}
-            </motion.p>
+            </p>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

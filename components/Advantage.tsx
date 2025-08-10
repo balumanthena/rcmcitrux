@@ -1,6 +1,5 @@
 "use client";
 
-import { motion, easeOut } from "framer-motion";
 import {
   Code2,
   ShieldCheck,
@@ -83,15 +82,6 @@ const rightAdvantages = [
   },
 ];
 
-const headingVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: easeOut },
-  },
-};
-
 export default function AdvantagesSection() {
   return (
     <section
@@ -100,27 +90,16 @@ export default function AdvantagesSection() {
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         {/* Heading */}
-        <motion.h2
-  className="text-4xl sm:text-5xl md:text-5xl font-extrabold text-center leading-tight text-slate-900 mb-8 tracking-tight select-text"
-  initial="hidden"
-  whileInView="visible"
-  viewport={{ once: true, amount: 0.5 }}
-  variants={headingVariants}
->
-  
-  <span className="relative inline-block">
-    Citrux
-    <motion.span
-      className="absolute left-0 -bottom-2 h-1 w-full bg-cyan-400 rounded-full origin-left"
-      initial={{ scaleX: 0 }}
-      whileInView={{ scaleX: 1 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      style={{ transformOrigin: "left" }}
-    />
-  </span>{" "}
-  Advantage
-</motion.h2>
-
+        <h2 className="text-4xl sm:text-5xl md:text-5xl font-extrabold text-center leading-tight text-slate-900 mb-8 tracking-tight select-text">
+          <span className="relative inline-block">
+            Citrux
+            <span
+              className="absolute left-0 -bottom-2 h-1 w-full bg-cyan-400 rounded-full origin-left"
+              style={{ transformOrigin: "left" }}
+            />
+          </span>{" "}
+          Advantage
+        </h2>
 
         <p className="text-center pt-5 text-gray-600 mb-12 max-w-2xl mx-auto">
           Empowering your revenue cycle with speed, accuracy, and unmatched expertise.
@@ -139,19 +118,9 @@ export default function AdvantagesSection() {
             {leftAdvantages.map((item, index) => {
               const Icon = item.icon;
               return (
-                <motion.div
+                <div
                   role="listitem"
                   key={index}
-                  initial={{ opacity: 0, y: 30, scale: 0.8 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{
-                    duration: 0.8,
-                    delay: index * 0.1,
-                    type: "spring",
-                    stiffness: 100,
-                    damping: 25,
-                  }}
-                  viewport={{ once: true }}
                   className="flex items-start gap-4 sm:gap-5"
                 >
                   {/* Icon Circle */}
@@ -175,7 +144,7 @@ export default function AdvantagesSection() {
                     <h3 className="text-lg font-bold text-gray-900">{item.title}</h3>
                     <p className="text-gray-700 text-sm leading-relaxed">{item.desc}</p>
                   </div>
-                </motion.div>
+                </div>
               );
             })}
           </div>
@@ -185,19 +154,9 @@ export default function AdvantagesSection() {
             {rightAdvantages.map((item, index) => {
               const Icon = item.icon;
               return (
-                <motion.div
+                <div
                   role="listitem"
                   key={index}
-                  initial={{ opacity: 0, y: 30, scale: 0.8 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{
-                    duration: 0.8,
-                    delay: index * 0.1,
-                    type: "spring",
-                    stiffness: 100,
-                    damping: 25,
-                  }}
-                  viewport={{ once: true }}
                   className="flex items-start gap-4 sm:gap-5"
                 >
                   {/* Icon Circle */}
@@ -221,7 +180,7 @@ export default function AdvantagesSection() {
                     <h3 className="text-lg font-bold text-gray-900">{item.title}</h3>
                     <p className="text-gray-700 text-sm leading-relaxed">{item.desc}</p>
                   </div>
-                </motion.div>
+                </div>
               );
             })}
           </div>

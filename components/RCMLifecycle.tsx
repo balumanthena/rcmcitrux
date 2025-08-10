@@ -10,7 +10,6 @@ import {
   AlertTriangle,
   CheckCircle,
 } from 'lucide-react';
-import { motion, easeOut } from 'framer-motion';
 
 type Stage = {
   id: number;
@@ -30,24 +29,6 @@ const STAGES: Stage[] = [
   { id: 5, title: 'Denial Management', short: 'Appeal & recover', long: 'Timely appeals, root-cause analysis, and prevention loop.', Icon: AlertTriangle, color: 'from-cyan-400 to-blue-500' },
   { id: 6, title: 'Reporting & Analytics', short: 'Actionable insights', long: 'KPIs, trends, and dashboards to optimize revenue.', Icon: CheckCircle, color: 'from-lime-400 to-emerald-500' },
 ];
-
-const headingVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: (custom: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: custom * 0.1, type: "spring" as const, stiffness: 100 },
-  }),
-};
-
-const paragraphVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: (custom: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: 0.3 + custom * 0.2, ease: easeOut },
-  }),
-};
 
 export default function RcmLifecycleCircle() {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -145,23 +126,15 @@ export default function RcmLifecycleCircle() {
     <section className="py-16 px-6 bg-gradient-to-b from-white to-slate-50">
       {/* Heading at the top */}
       <div className="max-w-7xl mx-auto mb-12 px-4 text-center md:text-left">
-        <motion.h2
+        <h2
           className="text-4xl sm:text-5xl md:text-5xl font-extrabold text-center leading-tight text-slate-900 tracking-tight select-text"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.5 }}
-          variants={headingVariants}
-          custom={0}
           aria-level={2}
         >
           How It Works — the lifecycle
-        </motion.h2>
+        </h2>
 
-        <motion.div
+        <div
           className="w-28 h-1 bg-cyan-400 rounded-full mt-4 origin-left mx-auto md:mx-78"
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          transition={{ duration: 0.6, ease: easeOut }}
           style={{ transformOrigin: 'left' }}
         />
       </div>
@@ -288,16 +261,9 @@ export default function RcmLifecycleCircle() {
 
         {/* Detail panel */}
         <div>
-          <motion.p
-            className="text-gray-600 mb-6 max-w-xl"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.5 }}
-            variants={paragraphVariants}
-            custom={1}
-          >
+          <p className="text-gray-600 mb-6 max-w-xl">
             Hover or focus any stage on the left to highlight its connections. Click or press Enter to lock it and read details.
-          </motion.p>
+          </p>
 
           <div className="bg-white/60 backdrop-blur-md border border-white/40 rounded-3xl p-6 shadow-md">
             <div className="flex flex-col md:flex-row items-start md:items-center gap-5">
