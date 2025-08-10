@@ -107,10 +107,7 @@ export default function RiskAdjustmentPage() {
                 <p className="text-sm text-gray-500">Serving healthcare providers nationwide</p>
                 <h3 className="mt-2 text-xl font-semibold">Expertise in Risk Adjustment</h3>
               </div>
-              <div className="text-right">
-                <div className="text-2xl font-bold">10+ yrs</div>
-                <div className="text-xs text-gray-500">industry experience</div>
-              </div>
+             
             </div>
 
             <div className="mt-6 grid grid-cols-2 gap-3 text-center">

@@ -20,7 +20,7 @@ export default function MedicalCodingPage() {
       icon: Check,
     },
     {
-      title: 'HIPAA & Security First',
+      title: 'Security First',
       desc: 'Encrypted workflows, secure access controls, and documented compliance processes.',
       icon: ShieldCheck,
     },
@@ -86,7 +86,7 @@ export default function MedicalCodingPage() {
             </li>
             <li className="flex items-start gap-3">
               <span className="flex-shrink-0 mt-1 text-sky-600"><ShieldCheck size={18} /></span>
-              <span>End-to-end HIPAA-conscious workflows with audited access and encryption.</span>
+              <span>End-to-end workflows with audited access and encryption.</span>
             </li>
           </ul>
 

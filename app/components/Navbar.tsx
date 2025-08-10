@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import clsx from 'clsx';
@@ -8,7 +9,7 @@ import clsx from 'clsx';
 export default function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [servicesOpen, setServicesOpen] = useState(false);
+  const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
 
   const links = [
     { href: '/', label: 'Home' },
@@ -29,18 +30,21 @@ export default function Navbar() {
 
   useEffect(() => {
     setMenuOpen(false);
-    setServicesOpen(false);
+    setOpenSubmenu(null);
   }, [pathname]);
 
   return (
     <nav role="navigation" className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 pt-4 pb-2 flex items-center justify-between">
         {/* Logo */}
-        <Link
-          href="/"
-          className="font-serif text-gray-900 text-2xl tracking-wide hover:text-blue-700 transition-colors"
-        >
-          RCM
+        <Link href="/" aria-label="Home" className="flex items-center">
+          <Image
+            src="/images/Frame 12.png"
+            alt="RCM Logo"
+            width={150}
+            height={150}
+            priority
+          />
         </Link>
 
         {/* Desktop Menu */}
@@ -56,6 +60,7 @@ export default function Navbar() {
                     isActive && 'text-blue-700 border-blue-700'
                   )}
                   aria-current={isActive ? 'page' : undefined}
+                  aria-haspopup={children ? 'true' : undefined}
                 >
                   {label}
                 </Link>
@@ -68,6 +73,7 @@ export default function Navbar() {
                         <Link
                           href={child.href}
                           className="block px-5 py-2 text-gray-700 hover:bg-gray-50 hover:text-blue-700"
+                          aria-current={pathname === child.href ? 'page' : undefined}
                         >
                           {child.label}
                         </Link>
@@ -115,32 +121,58 @@ export default function Navbar() {
         <ul className="flex flex-col p-4 space-y-2">
           {links.map(({ href, label, children }) => {
             const isActive = pathname === href || (children && children.some(c => pathname === c.href));
+            const submenuOpen = openSubmenu === href;
+
             return (
               <li key={href}>
                 <div
                   className={clsx(
-                    'flex justify-between items-center px-4 py-2 rounded hover:bg-gray-50 hover:text-blue-700',
+                    'flex justify-between items-center px-4 py-2 rounded hover:bg-gray-50 hover:text-blue-700 cursor-pointer',
                     isActive && 'text-blue-700 font-semibold bg-gray-50'
                   )}
                   onClick={() => {
                     if (children) {
-                      setServicesOpen((prev) => !prev);
+                      setOpenSubmenu(submenuOpen ? null : href);
+                    } else {
+                      setMenuOpen(false); // Close menu if clicking a link without children
+                    }
+                  }}
+                  role={children ? 'button' : undefined}
+                  aria-haspopup={children ? 'true' : undefined}
+                  aria-expanded={children ? submenuOpen : undefined}
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      if (children) {
+                        setOpenSubmenu(submenuOpen ? null : href);
+                      }
                     }
                   }}
                 >
-                  <Link href={href} aria-current={isActive ? 'page' : undefined}>
+                  <Link
+                    href={href}
+                    aria-current={isActive ? 'page' : undefined}
+                    onClick={(e) => {
+                      if (children) e.preventDefault(); // Prevent navigation when toggling submenu
+                      else setMenuOpen(false);
+                    }}
+                    className="flex-grow"
+                  >
                     {label}
                   </Link>
-                  {children && <span>{servicesOpen ? '−' : '+'}</span>}
+                  {children && <span aria-hidden="true" className="ml-2">{submenuOpen ? '−' : '+'}</span>}
                 </div>
 
-                {children && servicesOpen && (
+                {children && submenuOpen && (
                   <ul className="pl-6 space-y-1">
                     {children.map((child) => (
                       <li key={child.href}>
                         <Link
                           href={child.href}
                           className="block px-4 py-1 text-gray-600 hover:text-blue-700"
+                          aria-current={pathname === child.href ? 'page' : undefined}
+                          onClick={() => setMenuOpen(false)} // Close menu on child link click
                         >
                           {child.label}
                         </Link>

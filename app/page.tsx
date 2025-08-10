@@ -1,7 +1,7 @@
 'use client';
 
 import Hero from '../components/Hero';
-import Footer from '@/components/ui/Footer';
+
 
 export default function Landing() {
   return (
@@ -10,7 +10,7 @@ export default function Landing() {
 
       {/* You can add Process Steps & Testimonials sections here */}
 
-      <Footer />
+     
     </main>
   );
 }

@@ -20,7 +20,7 @@ export default function MedicalAuditingPage() {
     },
     {
       title: 'Compliance Assurance',
-      desc: 'Ensure adherence to HIPAA, HITECH, CMS, and payer-specific standards.',
+      desc: 'Ensure adherence , HITECH, CMS, and payer-specific standards.',
       icon: ClipboardList,
     },
     {
@@ -113,10 +113,7 @@ export default function MedicalAuditingPage() {
                 <p className="text-sm text-gray-500">Serving hospitals, clinics & IPAs</p>
                 <h3 className="mt-2 text-xl font-semibold">Experienced auditing professionals</h3>
               </div>
-              <div className="text-right">
-                <div className="text-2xl font-bold">15+ yrs</div>
-                <div className="text-xs text-gray-500">industry experience</div>
-              </div>
+              
             </div>
 
             <div className="mt-6 grid grid-cols-2 gap-3 text-center">

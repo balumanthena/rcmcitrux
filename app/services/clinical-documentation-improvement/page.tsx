@@ -102,10 +102,7 @@ export default function ClinicalDocumentationImprovementPage() {
                 <p className="text-sm text-gray-500">Supporting hospitals & healthcare providers</p>
                 <h3 className="mt-2 text-xl font-semibold">CDI expertise you can trust</h3>
               </div>
-              <div className="text-right">
-                <div className="text-2xl font-bold">12+ yrs</div>
-                <div className="text-xs text-gray-500">team experience</div>
-              </div>
+             
             </div>
 
             <div className="mt-6 grid grid-cols-2 gap-3 text-center">

@@ -263,8 +263,8 @@ export default function RcmLifecycleCircle() {
                 <h3 className="text-xl font-semibold text-gray-900">{STAGES[selected].title}</h3>
                 <p className="mt-2 text-gray-600">{STAGES[selected].long}</p>
                 <div className="mt-4 flex gap-3">
-                  <button className="px-5 py-2 rounded-lg bg-indigo-600 text-white shadow-sm hover:brightness-105 transition">Get Started</button>
-                  <a className="text-sm text-indigo-600 underline" href="#contact">Talk to sales →</a>
+                  <button className="px-5 py-2 rounded-lg bg-indigo-600 text-white shadow-sm hover:brightness-105 transition">schedule a free consultation</button>
+                
                 </div>
               </div>
             </div>

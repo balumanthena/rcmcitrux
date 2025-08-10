@@ -15,9 +15,9 @@ import {
 } from "lucide-react";
 
 const brandCyan = "#00BFC5";
-const bgDark = "#0C1121";
-const cardBg = "#F8F9FB";
-const iconBg = "rgba(0, 191, 197, 0.1)";
+const bgLight = "#F9FAFB"; // light background
+const cardBgLight = "#FFFFFF"; // white card bg
+const iconBgLight = "rgba(0, 191, 197, 0.12)"; // subtle cyan background for icons
 
 const leftAdvantages = [
   { title: "Expert Medical Coding", desc: "Our coding specialists hold top industry certifications and advanced education, ensuring every code is accurate and compliant.", icon: Code2 },
@@ -37,14 +37,14 @@ const rightAdvantages = [
 
 export default function AdvantagesSection() {
   return (
-    <section className="relative py-16 md:py-20 font-sans" style={{ backgroundColor: bgDark }}>
+    <section className="relative py-16 md:py-20 font-sans" style={{ backgroundColor: bgLight }}>
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         
         {/* Heading */}
-        <h2 className="text-center text-4xl font-extrabold text-white mb-3 tracking-tight">
-          The <span style={{ color: "white" }}>Citrux</span> Advantage
+        <h2 className="text-center text-4xl font-extrabold text-gray-900 mb-3 tracking-tight">
+          The <span style={{ color: brandCyan }}>Citrux</span> Advantage
         </h2>
-        <p className="text-center text-gray-400 mb-12 max-w-2xl mx-auto">
+        <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
           Empowering your revenue cycle with speed, accuracy, and unmatched expertise.
         </p>
 
@@ -58,27 +58,33 @@ export default function AdvantagesSection() {
               return (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  initial={{ opacity: 0, y: 30, scale: 0.8 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{
+                    duration: 0.8,
+                    delay: index * 0.1,
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 25,
+                  }}
                   viewport={{ once: true }}
                   className="flex items-start gap-4 sm:gap-5"
                 >
                   {/* Icon Circle */}
                   <div
                     className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center"
-                    style={{ backgroundColor: iconBg }}
+                    style={{ backgroundColor: iconBgLight }}
                   >
                     <Icon className="w-6 h-6" style={{ color: brandCyan }} />
                   </div>
                   
                   {/* Card */}
                   <div
-                    className="flex-1 p-5 sm:p-6 rounded-xl shadow-lg"
-                    style={{ backgroundColor: cardBg }}
+                    className="flex-1 p-5 sm:p-6 rounded-xl shadow-lg hover:scale-105 hover:shadow-2xl transition-all duration-300"
+                    style={{ backgroundColor: cardBgLight }}
                   >
                     <h3 className="text-lg font-bold text-gray-900">{item.title}</h3>
-                    <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
+                    <p className="text-gray-700 text-sm leading-relaxed">{item.desc}</p>
                   </div>
                 </motion.div>
               );
@@ -92,27 +98,33 @@ export default function AdvantagesSection() {
               return (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  initial={{ opacity: 0, y: 30, scale: 0.8 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{
+                    duration: 0.8,
+                    delay: index * 0.1,
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 25,
+                  }}
                   viewport={{ once: true }}
                   className="flex items-start gap-4 sm:gap-5"
                 >
                   {/* Icon Circle */}
                   <div
                     className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center"
-                    style={{ backgroundColor: iconBg }}
+                    style={{ backgroundColor: iconBgLight }}
                   >
                     <Icon className="w-6 h-6" style={{ color: brandCyan }} />
                   </div>
                   
                   {/* Card */}
                   <div
-                    className="flex-1 p-5 sm:p-6 rounded-xl shadow-lg"
-                    style={{ backgroundColor: cardBg }}
+                    className="flex-1 p-5 sm:p-6 rounded-xl shadow-lg hover:scale-105 hover:shadow-2xl transition-all duration-300"
+                    style={{ backgroundColor: cardBgLight }}
                   >
                     <h3 className="text-lg font-bold text-gray-900">{item.title}</h3>
-                    <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
+                    <p className="text-gray-700 text-sm leading-relaxed">{item.desc}</p>
                   </div>
                 </motion.div>
               );

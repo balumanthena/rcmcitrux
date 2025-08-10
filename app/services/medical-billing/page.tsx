@@ -37,7 +37,7 @@ export default function MedicalBillingPage() {
     },
     {
       title: 'Compliance First',
-      desc: 'Adherence to HIPAA, HITECH, CMS, and payer-specific rules at every step.',
+      desc: 'Adherence, HITECH, CMS, and payer-specific rules at every step.',
       icon: ClipboardList,
     },
     {
@@ -88,7 +88,7 @@ export default function MedicalBillingPage() {
               </li>
               <li className="flex items-start gap-3">
                 <span className="flex-shrink-0 mt-1 text-green-600"><Check size={18} /></span>
-                <span>Full compliance with HIPAA, HITECH, CMS, and payer-specific requirements.</span>
+                <span>Full compliance , HITECH, CMS, and payer-specific requirements.</span>
               </li>
             </ul>
 
@@ -115,10 +115,7 @@ export default function MedicalBillingPage() {
                 <p className="text-sm text-gray-500">Serving hospitals, clinics & IPAs</p>
                 <h3 className="mt-2 text-xl font-semibold">Revenue cycle outcomes that scale</h3>
               </div>
-              <div className="text-right">
-                <div className="text-2xl font-bold">10+ yrs</div>
-                <div className="text-xs text-gray-500">avg team experience</div>
-              </div>
+             
             </div>
 
             <div className="mt-6 grid grid-cols-2 gap-3 text-center">

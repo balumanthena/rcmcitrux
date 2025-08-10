@@ -7,7 +7,7 @@ import { ShieldCheck, Settings, BarChart2 } from 'lucide-react';
 const features = [
   {
     icon: <ShieldCheck className="w-10 h-10 text-primary mb-4 mx-auto" />,
-    title: 'HIPAA Compliant',
+    title: 'Compliant',
     description:
       'Ensuring your data privacy and security with industry-standard compliance.',
   },
