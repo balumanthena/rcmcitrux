@@ -75,7 +75,7 @@ export default function OurMission() {
         >
           <motion.h2
             aria-level={2}
-            className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight text-slate-900 mb-8 tracking-tight select-text"
+            className="text-4xl sm:text-5xl md:text-5xl font-extrabold leading-tight text-slate-900 mb-8 tracking-tight select-text"
             variants={headingVariants}
             custom={0}
           >

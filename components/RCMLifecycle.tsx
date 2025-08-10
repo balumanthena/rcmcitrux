@@ -143,15 +143,38 @@ export default function RcmLifecycleCircle() {
 
   return (
     <section className="py-16 px-6 bg-gradient-to-b from-white to-slate-50">
-      {/* Desktop version */}
-      <div className="max-w-7xl mx-auto hidden lg:grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      {/* Heading at the top */}
+      <div className="max-w-7xl mx-auto mb-12 px-4 text-center md:text-left">
+        <motion.h2
+          className="text-4xl sm:text-5xl md:text-5xl font-extrabold text-center leading-tight text-slate-900 tracking-tight select-text"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.5 }}
+          variants={headingVariants}
+          custom={0}
+          aria-level={2}
+        >
+          How It Works — the lifecycle
+        </motion.h2>
+
+        <motion.div
+          className="w-28 h-1 bg-cyan-400 rounded-full mt-4 origin-left mx-auto md:mx-78"
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          transition={{ duration: 0.6, ease: easeOut }}
+          style={{ transformOrigin: 'left' }}
+        />
+      </div>
+
+      {/* Main grid */}
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 p-4 items-center">
         {/* Circle */}
         <div className="w-full flex items-center justify-center">
           <div
             ref={containerRef}
             tabIndex={0}
             aria-label="RCM lifecycle visual"
-            className="relative w-[560px] h-[560px] rounded-full"
+            className="relative w-full max-w-[560px] aspect-square rounded-full mx-auto"
           >
             <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-white to-slate-100 shadow-inner pointer-events-none" />
 
@@ -265,26 +288,6 @@ export default function RcmLifecycleCircle() {
 
         {/* Detail panel */}
         <div>
-          <motion.h2
-            className="text-3xl font-extrabold text-gray-900 mb-3"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.5 }}
-            variants={headingVariants}
-            custom={0}
-          >
-            How It Works — the lifecycle
-          </motion.h2>
-
-          {/* Decorative underline */}
-          <motion.div
-            className="w-24 h-1 bg-cyan-400 rounded-full mb-6 origin-left"
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            transition={{ duration: 0.6, ease: easeOut }}
-            style={{ transformOrigin: 'left' }}
-          />
-
           <motion.p
             className="text-gray-600 mb-6 max-w-xl"
             initial="hidden"
@@ -297,7 +300,7 @@ export default function RcmLifecycleCircle() {
           </motion.p>
 
           <div className="bg-white/60 backdrop-blur-md border border-white/40 rounded-3xl p-6 shadow-md">
-            <div className="flex items-start gap-5">
+            <div className="flex flex-col md:flex-row items-start md:items-center gap-5">
               <div>
                 <div className={`w-16 h-16 rounded-lg flex items-center justify-center bg-gradient-to-br ${STAGES[selected].color} text-white shadow`}>
                   {React.createElement(STAGES[selected].Icon, { className: "w-7 h-7" })}
@@ -335,33 +338,6 @@ export default function RcmLifecycleCircle() {
           <div className="mt-4 text-sm text-gray-500">
             Tip: Use <span className="font-medium">arrow keys</span> to move, <span className="font-medium">Enter</span> to select.
           </div>
-        </div>
-      </div>
-
-      {/* Mobile: Modern vertical timeline */}
-      {/* Mobile: Two-column grid like screenshot */}
-      {/* Mobile: Modern grid layout with heading */}
-      <div className="mt-12 lg:hidden max-w-md mx-auto px-4">
-        <h2 className="text-2xl font-bold text-center text-gray-900">
-          RCM Lifecycle
-        </h2>
-        <p className="mt-2 text-sm text-center text-gray-600">
-          A streamlined process for efficient revenue cycle management
-        </p>
-
-        <div className="mt-8 grid grid-cols-2 gap-6">
-          {STAGES.map((s) => (
-            <div
-              key={s.id}
-              className="flex flex-col items-center text-center p-4 bg-white rounded-xl shadow border border-gray-100"
-            >
-              <div className="w-16 h-16 rounded-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 shadow-inner">
-                <s.Icon className="w-8 h-8 text-gray-700" />
-              </div>
-              <h4 className="mt-3 text-sm font-semibold text-gray-900">{s.title}</h4>
-              <p className="mt-1 text-xs text-gray-500">{s.short}</p>
-            </div>
-          ))}
         </div>
       </div>
     </section>

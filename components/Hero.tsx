@@ -103,7 +103,7 @@ export default function Hero() {
               </motion.span>
               <br className="hidden sm:inline" /> operations with{' '}
               <span className="whitespace-nowrap bg-amber-100 px-3 py-1 rounded-full text-xs font-medium text-amber-900 ml-3">
-                faster claims • happier patients
+                faster claims • accurate coding 
               </span>
             </motion.h1>
 

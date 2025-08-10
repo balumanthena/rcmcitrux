@@ -48,26 +48,28 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Menu */}
-        <ul className="hidden md:flex space-x-6 font-medium text-gray-800">
+        <ul className="hidden md:flex space-x-6 font-medium text-gray-800 justify-center flex-grow">
           {links.map(({ href, label, children }) => {
             const isActive = pathname === href || (children && children.some(c => pathname === c.href));
-            return (
-              <li key={href} className="relative group">
-                <Link
-                  href={href}
-                  className={clsx(
-                    'pb-1 transition-all duration-200 hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700',
-                    isActive && 'text-blue-700 border-blue-700'
-                  )}
-                  aria-current={isActive ? 'page' : undefined}
-                  aria-haspopup={children ? 'true' : undefined}
-                >
-                  {label}
-                </Link>
+            if (children) {
+              // For parent with children, no navigation on desktop, only dropdown on hover
+              return (
+                <li key={href} className="relative group">
+                  <button
+                    type="button"
+                    aria-haspopup="true"
+                    aria-expanded={isActive}
+                    className={clsx(
+                      'pb-1 transition-all duration-200 hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700',
+                      isActive && 'text-blue-700 border-blue-700',
+                      'cursor-pointer bg-transparent border-none font-medium'
+                    )}
+                  >
+                    {label}
+                  </button>
 
-                {/* Dropdown */}
-                {children && (
-                  <ul className="absolute left-0 mt-2 w-64 bg-white border border-gray-200 rounded-md shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all">
+                  {/* Dropdown */}
+                  <ul className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-64 bg-white border border-gray-200 rounded-md shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all z-50">
                     {children.map((child) => (
                       <li key={child.href} className="border-b border-gray-100 last:border-none">
                         <Link
@@ -80,9 +82,25 @@ export default function Navbar() {
                       </li>
                     ))}
                   </ul>
-                )}
-              </li>
-            );
+                </li>
+              );
+            } else {
+              // Normal link without children
+              return (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    className={clsx(
+                      'pb-1 transition-all duration-200 hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700',
+                      isActive && 'text-blue-700 border-blue-700'
+                    )}
+                    aria-current={isActive ? 'page' : undefined}
+                  >
+                    {label}
+                  </Link>
+                </li>
+              );
+            }
           })}
         </ul>
 
@@ -150,17 +168,7 @@ export default function Navbar() {
                     }
                   }}
                 >
-                  <Link
-                    href={href}
-                    aria-current={isActive ? 'page' : undefined}
-                    onClick={(e) => {
-                      if (children) e.preventDefault(); // Prevent navigation when toggling submenu
-                      else setMenuOpen(false);
-                    }}
-                    className="flex-grow"
-                  >
-                    {label}
-                  </Link>
+                  <span className="flex-grow">{label}</span>
                   {children && <span aria-hidden="true" className="ml-2">{submenuOpen ? '−' : '+'}</span>}
                 </div>
 

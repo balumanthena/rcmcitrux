@@ -101,7 +101,7 @@ export default function AdvantagesSection() {
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         {/* Heading */}
         <motion.h2
-  className="text-3xl sm:text-4xl md:text-5xl text-center font-extrabold leading-tight text-slate-900 mb-3 flex justify-center gap-2"
+  className="text-4xl sm:text-5xl md:text-5xl font-extrabold text-center leading-tight text-slate-900 mb-8 tracking-tight select-text"
   initial="hidden"
   whileInView="visible"
   viewport={{ once: true, amount: 0.5 }}
