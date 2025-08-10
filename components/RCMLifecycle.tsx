@@ -1,4 +1,3 @@
-// components/RcmLifecycleCircle.tsx
 'use client';
 
 import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react';
@@ -11,6 +10,7 @@ import {
   AlertTriangle,
   CheckCircle,
 } from 'lucide-react';
+import { motion, easeOut } from 'framer-motion';
 
 type Stage = {
   id: number;
@@ -30,6 +30,24 @@ const STAGES: Stage[] = [
   { id: 5, title: 'Denial Management', short: 'Appeal & recover', long: 'Timely appeals, root-cause analysis, and prevention loop.', Icon: AlertTriangle, color: 'from-cyan-400 to-blue-500' },
   { id: 6, title: 'Reporting & Analytics', short: 'Actionable insights', long: 'KPIs, trends, and dashboards to optimize revenue.', Icon: CheckCircle, color: 'from-lime-400 to-emerald-500' },
 ];
+
+const headingVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (custom: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: custom * 0.1, type: "spring" as const, stiffness: 100 },
+  }),
+};
+
+const paragraphVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (custom: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: 0.3 + custom * 0.2, ease: easeOut },
+  }),
+};
 
 export default function RcmLifecycleCircle() {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -247,10 +265,36 @@ export default function RcmLifecycleCircle() {
 
         {/* Detail panel */}
         <div>
-          <h2 className="text-3xl font-extrabold text-gray-900 mb-3">How It Works — the lifecycle</h2>
-          <p className="text-gray-600 mb-6 max-w-xl">
+          <motion.h2
+            className="text-3xl font-extrabold text-gray-900 mb-3"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.5 }}
+            variants={headingVariants}
+            custom={0}
+          >
+            How It Works — the lifecycle
+          </motion.h2>
+
+          {/* Decorative underline */}
+          <motion.div
+            className="w-24 h-1 bg-cyan-400 rounded-full mb-6 origin-left"
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            transition={{ duration: 0.6, ease: easeOut }}
+            style={{ transformOrigin: 'left' }}
+          />
+
+          <motion.p
+            className="text-gray-600 mb-6 max-w-xl"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.5 }}
+            variants={paragraphVariants}
+            custom={1}
+          >
             Hover or focus any stage on the left to highlight its connections. Click or press Enter to lock it and read details.
-          </p>
+          </motion.p>
 
           <div className="bg-white/60 backdrop-blur-md border border-white/40 rounded-3xl p-6 shadow-md">
             <div className="flex items-start gap-5">
@@ -263,8 +307,9 @@ export default function RcmLifecycleCircle() {
                 <h3 className="text-xl font-semibold text-gray-900">{STAGES[selected].title}</h3>
                 <p className="mt-2 text-gray-600">{STAGES[selected].long}</p>
                 <div className="mt-4 flex gap-3">
-                  <button className="px-5 py-2 rounded-lg bg-indigo-600 text-white shadow-sm hover:brightness-105 transition">schedule a free consultation</button>
-                
+                  <button className="px-5 py-2 rounded-lg bg-indigo-600 text-white shadow-sm hover:brightness-105 transition">
+                    Schedule a free consultation
+                  </button>
                 </div>
               </div>
             </div>
@@ -276,7 +321,9 @@ export default function RcmLifecycleCircle() {
                 <button
                   key={s.id}
                   onClick={() => setSelected(i)}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm ${selected === i ? 'bg-indigo-50 ring-1 ring-indigo-100' : 'bg-gray-50'} transition`}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm ${
+                    selected === i ? 'bg-indigo-50 ring-1 ring-indigo-100' : 'bg-gray-50'
+                  } transition`}
                 >
                   <s.Icon className="w-4 h-4 text-indigo-500" />
                   <span>{s.title}</span>
@@ -292,34 +339,31 @@ export default function RcmLifecycleCircle() {
       </div>
 
       {/* Mobile: Modern vertical timeline */}
-     {/* Mobile: Two-column grid like screenshot */}
-{/* Mobile: Modern grid layout with heading */}
-<div className="mt-12 lg:hidden max-w-md mx-auto px-4">
-  <h2 className="text-2xl font-bold text-center text-gray-900">
-    RCM Lifecycle
-  </h2>
-  <p className="mt-2 text-sm text-center text-gray-600">
-    A streamlined process for efficient revenue cycle management
-  </p>
+      {/* Mobile: Two-column grid like screenshot */}
+      {/* Mobile: Modern grid layout with heading */}
+      <div className="mt-12 lg:hidden max-w-md mx-auto px-4">
+        <h2 className="text-2xl font-bold text-center text-gray-900">
+          RCM Lifecycle
+        </h2>
+        <p className="mt-2 text-sm text-center text-gray-600">
+          A streamlined process for efficient revenue cycle management
+        </p>
 
-  <div className="mt-8 grid grid-cols-2 gap-6">
-    {STAGES.map((s) => (
-      <div
-        key={s.id}
-        className="flex flex-col items-center text-center p-4 bg-white rounded-xl shadow border border-gray-100"
-      >
-        <div className="w-16 h-16 rounded-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 shadow-inner">
-          <s.Icon className="w-8 h-8 text-gray-700" />
+        <div className="mt-8 grid grid-cols-2 gap-6">
+          {STAGES.map((s) => (
+            <div
+              key={s.id}
+              className="flex flex-col items-center text-center p-4 bg-white rounded-xl shadow border border-gray-100"
+            >
+              <div className="w-16 h-16 rounded-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 shadow-inner">
+                <s.Icon className="w-8 h-8 text-gray-700" />
+              </div>
+              <h4 className="mt-3 text-sm font-semibold text-gray-900">{s.title}</h4>
+              <p className="mt-1 text-xs text-gray-500">{s.short}</p>
+            </div>
+          ))}
         </div>
-        <h4 className="mt-3 text-sm font-semibold text-gray-900">{s.title}</h4>
-        <p className="mt-1 text-xs text-gray-500">{s.short}</p>
       </div>
-    ))}
-  </div>
-</div>
-
-
-
     </section>
   );
 }
