@@ -150,7 +150,7 @@ export default function AboutPage() {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0, transition: { delay: 0.25 } }}
                 >
-                  RCM Health Service blends deep clinical-coding expertise with modern automation to reduce
+                  Citrux Health Solution blends deep clinical-coding expertise with modern automation to reduce
                   denials, speed reimbursements, and keep your practice compliant. We partner with hospitals,
                   clinics and specialty groups across the country.
                 </motion.p>
@@ -163,12 +163,7 @@ export default function AboutPage() {
                     Contact Us
                   </Link>
 
-                  <Link
-                    href="/services"
-                    className="inline-flex items-center px-5 py-3 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 transition"
-                  >
-                    Our Services
-                  </Link>
+                 
                 </div>
 
                 {/* Quick Stats */}
