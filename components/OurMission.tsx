@@ -9,7 +9,7 @@ export default function OurMission() {
     <section aria-label="Our Mission" className="bg-white py-20">
       <div className="container mx-auto px-6 lg:px-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          
+
           {/* Image */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
@@ -35,17 +35,18 @@ export default function OurMission() {
             viewport={{ once: true }}
             className="space-y-6 max-w-xl"
           >
-            <h2 className="text-4xl font-extrabold text-gray-900 mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight text-slate-900 mb-6">
               Our Mission
             </h2>
-            <p className="text-lg text-gray-700 leading-relaxed">
-              At <span className="font-semibold text-blue-600">Citrux</span>, our mission is simple yet ambitious — to empower businesses with innovative, reliable, and human-centric solutions that drive growth and efficiency.
+
+            <p className="text-base text-slate-600 max-w-xl leading-relaxed">
+              We are on a mission to help healthcare organizations achieve market-leading results by delivering unparalleled value and expertise. Our comprehensive support spans payers, providers, and medical billing companies, enabling them to realize significant financial and administrative business outcomes.
             </p>
-            <p className="text-lg text-gray-700 leading-relaxed">
-              We believe technology should not just keep pace with the future, but shape it. That’s why we design every product and service with precision, creativity, and an unwavering commitment to excellence.
+            <p className="text-base text-slate-600 max-w-xl leading-relaxed">
+              Leveraging a robust global delivery model, highly knowledgeable resources, and a relentless focus on innovation, we empower our clients to navigate the complexities of healthcare with confidence and agility. We prioritize deep collaboration and customized solutions to meet the unique challenges faced by each organization we serve.
             </p>
-            <p className="text-lg text-gray-700 leading-relaxed">
-              Through collaboration, innovation, and integrity, we aim to transform challenges into opportunities, helping our clients achieve their goals faster and smarter.
+            <p className="text-base text-slate-600 max-w-xl leading-relaxed">
+              By combining industry-leading technology with domain expertise, Citrux strives to enhance operational efficiencies, reduce costs, and improve patient outcomes — all while fostering long-term partnerships built on trust and integrity.
             </p>
           </motion.div>
         </div>

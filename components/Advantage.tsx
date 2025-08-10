@@ -41,9 +41,9 @@ export default function AdvantagesSection() {
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         
         {/* Heading */}
-        <h2 className="text-center text-4xl font-extrabold text-gray-900 mb-3 tracking-tight">
-          The <span style={{ color: brandCyan }}>Citrux</span> Advantage
-        </h2>
+         <h2 className="text-3xl sm:text-4xl md:text-5xl text-center font-extrabold leading-tight text-slate-900 mb-6">
+              The Citrux Advantage
+            </h2>
         <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
           Empowering your revenue cycle with speed, accuracy, and unmatched expertise.
         </p>
