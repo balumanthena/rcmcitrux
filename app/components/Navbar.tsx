@@ -51,8 +51,8 @@ export default function Navbar() {
         <ul className="hidden md:flex space-x-6 font-medium text-gray-800 justify-center flex-grow">
           {links.map(({ href, label, children }) => {
             const isActive = pathname === href || (children && children.some(c => pathname === c.href));
+
             if (children) {
-              // For parent with children, no navigation on desktop, only dropdown on hover
               return (
                 <li key={href} className="relative group">
                   <button
@@ -85,7 +85,6 @@ export default function Navbar() {
                 </li>
               );
             } else {
-              // Normal link without children
               return (
                 <li key={href}>
                   <Link
@@ -143,50 +142,60 @@ export default function Navbar() {
 
             return (
               <li key={href}>
-                <div
-                  className={clsx(
-                    'flex justify-between items-center px-4 py-2 rounded hover:bg-gray-50 hover:text-blue-700 cursor-pointer',
-                    isActive && 'text-blue-700 font-semibold bg-gray-50'
-                  )}
-                  onClick={() => {
-                    if (children) {
-                      setOpenSubmenu(submenuOpen ? null : href);
-                    } else {
-                      setMenuOpen(false); // Close menu if clicking a link without children
-                    }
-                  }}
-                  role={children ? 'button' : undefined}
-                  aria-haspopup={children ? 'true' : undefined}
-                  aria-expanded={children ? submenuOpen : undefined}
-                  tabIndex={0}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault();
-                      if (children) {
-                        setOpenSubmenu(submenuOpen ? null : href);
-                      }
-                    }
-                  }}
-                >
-                  <span className="flex-grow">{label}</span>
-                  {children && <span aria-hidden="true" className="ml-2">{submenuOpen ? '−' : '+'}</span>}
-                </div>
+                {children ? (
+                  <>
+                    {/* Parent with children */}
+                    <div
+                      className={clsx(
+                        'flex justify-between items-center px-4 py-2 rounded hover:bg-gray-50 hover:text-blue-700 cursor-pointer',
+                        isActive && 'text-blue-700 font-semibold bg-gray-50'
+                      )}
+                      onClick={() => setOpenSubmenu(submenuOpen ? null : href)}
+                      role="button"
+                      aria-haspopup="true"
+                      aria-expanded={submenuOpen}
+                      tabIndex={0}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          setOpenSubmenu(submenuOpen ? null : href);
+                        }
+                      }}
+                    >
+                      <span className="flex-grow">{label}</span>
+                      <span aria-hidden="true" className="ml-2">{submenuOpen ? '−' : '+'}</span>
+                    </div>
 
-                {children && submenuOpen && (
-                  <ul className="pl-6 space-y-1">
-                    {children.map((child) => (
-                      <li key={child.href}>
-                        <Link
-                          href={child.href}
-                          className="block px-4 py-1 text-gray-600 hover:text-blue-700"
-                          aria-current={pathname === child.href ? 'page' : undefined}
-                          onClick={() => setMenuOpen(false)} // Close menu on child link click
-                        >
-                          {child.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
+                    {submenuOpen && (
+                      <ul className="pl-6 space-y-1">
+                        {children.map((child) => (
+                          <li key={child.href}>
+                            <Link
+                              href={child.href}
+                              className="block px-4 py-1 text-gray-600 hover:text-blue-700"
+                              aria-current={pathname === child.href ? 'page' : undefined}
+                              onClick={() => setMenuOpen(false)}
+                            >
+                              {child.label}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </>
+                ) : (
+                  // Simple link without children
+                  <Link
+                    href={href}
+                    className={clsx(
+                      'block px-4 py-2 rounded hover:bg-gray-50 hover:text-blue-700',
+                      isActive && 'text-blue-700 font-semibold bg-gray-50'
+                    )}
+                    onClick={() => setMenuOpen(false)}
+                    aria-current={isActive ? 'page' : undefined}
+                  >
+                    {label}
+                  </Link>
                 )}
               </li>
             );
