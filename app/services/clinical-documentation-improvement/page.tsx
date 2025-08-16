@@ -173,7 +173,7 @@ export default function ClinicalDocumentationImprovementPage() {
           href="/contact"
           className="fixed right-6 bottom-6 z-50 inline-flex items-center gap-3 px-4 py-3 rounded-full shadow-lg bg-purple-600 text-white font-medium hover:bg-purple-700 transition"
         >
-          <span>Schedule a 1:1</span>
+          <span>Contact</span>
         </Link>
 
         <div className="mt-16 text-xs text-gray-400">Citrux Health Solutions — Clinical Documentation Improvement</div>

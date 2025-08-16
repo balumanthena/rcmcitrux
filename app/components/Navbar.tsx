@@ -39,7 +39,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" aria-label="Home" className="flex items-center">
           <Image
-            src="/images/Frame 12.png"
+            src="/images/citrux solutions.png"
             alt="RCM Logo"
             width={150}
             height={150}

@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react';
+import Link from "next/link";
+
 import {
   UserPlus,
   FileText,
@@ -9,6 +11,7 @@ import {
   RefreshCcw,
   AlertTriangle,
   CheckCircle,
+  ArrowRight,
 } from 'lucide-react';
 
 type Stage = {
@@ -43,10 +46,9 @@ export default function RcmLifecycleCircle() {
     window.matchMedia &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Detect mobile screen width
   useEffect(() => {
     function handleResize() {
-      setIsMobile(window.innerWidth < 768); // md breakpoint in tailwind
+      setIsMobile(window.innerWidth < 768);
     }
     handleResize();
     window.addEventListener('resize', handleResize);
@@ -145,13 +147,11 @@ export default function RcmLifecycleCircle() {
         >
           How It Works — the lifecycle
         </h2>
-
         <div
           className="w-28 h-1 bg-cyan-400 rounded-full mt-4 origin-left mx-auto md:mx-78"
           style={{ transformOrigin: 'left' }}
         />
       </div>
-
       {/* Main grid */}
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 p-4 items-start">
         {isMobile ? (
@@ -166,6 +166,7 @@ export default function RcmLifecycleCircle() {
                     key={s.id}
                     onClick={() => setSelected(i)}
                     className={`flex items-center gap-4 p-4 rounded-xl shadow-md transition
+                      cursor-pointer hover:cursor-grab
                       ${
                         isSelected
                           ? 'bg-indigo-100 ring-2 ring-indigo-300'
@@ -187,7 +188,6 @@ export default function RcmLifecycleCircle() {
                 );
               })}
             </div>
-
             {/* Details panel for selected */}
             <div className="bg-white/60 backdrop-blur-md border border-white/40 rounded-3xl p-6 shadow-md">
               <div className="flex items-center gap-5">
@@ -201,11 +201,14 @@ export default function RcmLifecycleCircle() {
                   <p className="mt-2 text-gray-600">{STAGES[selected].long}</p>
                 </div>
               </div>
-              <div className="mt-4 flex gap-3">
-                <button className="px-5 py-2 rounded-lg bg-indigo-600 text-white shadow-sm hover:brightness-105 transition">
-                  Schedule a free consultation
-                </button>
-              </div>
+              <Link
+                href="/book"
+                className="group inline-flex items-center gap-3 rounded-2xl bg-[#4F46E5] px-6 py-3 text-white font-semibold shadow-lg hover:shadow-2xl transform hover:-translate-y-0.5 transition"
+                aria-label="Schedule a free consultation"
+              >
+                Schedule a free consultation
+                <ArrowRight className="ml-1 h-4 w-4 transform group-hover:translate-x-1 transition" />
+              </Link>
             </div>
           </div>
         ) : (
@@ -220,7 +223,6 @@ export default function RcmLifecycleCircle() {
                 className="relative w-full max-w-[560px] aspect-square rounded-full mx-auto"
               >
                 <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-white to-slate-100 shadow-inner pointer-events-none" />
-
                 {/* Paths */}
                 <svg
                   className="absolute inset-0 w-full h-full"
@@ -246,7 +248,6 @@ export default function RcmLifecycleCircle() {
                       </feMerge>
                     </filter>
                   </defs>
-
                   {positions.length > 0 &&
                     curves.map((path, i) => {
                       const isActive =
@@ -269,7 +270,6 @@ export default function RcmLifecycleCircle() {
                       );
                     })}
                 </svg>
-
                 {/* Stage cards */}
                 {positions.length > 0 &&
                   STAGES.map((s, i) => {
@@ -288,6 +288,7 @@ export default function RcmLifecycleCircle() {
                         onFocus={() => setHovered(i)}
                         onBlur={() => setHovered((h) => (h === i ? null : h))}
                         className={`absolute w-40 h-40 rounded-2xl p-3 text-left shadow-lg
+                          cursor-pointer hover:cursor-grab
                           ${isSelected ? 'ring-4 ring-indigo-200' : ''}
                           ${prefersReducedMotion ? '' : 'transition-transform duration-220'}
                         `}
@@ -313,7 +314,6 @@ export default function RcmLifecycleCircle() {
                       </button>
                     );
                   })}
-
                 {/* Center Hub */}
                 <div
                   className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-44 h-44 rounded-full flex flex-col items-center justify-center"
@@ -328,13 +328,11 @@ export default function RcmLifecycleCircle() {
                 </div>
               </div>
             </div>
-
             {/* Detail panel */}
             <div>
               <p className="text-gray-600 mb-6 max-w-xl">
                 Hover or focus any stage on the left to highlight its connections. Click or press Enter to lock it and read details.
               </p>
-
               <div className="bg-white/60 backdrop-blur-md border border-white/40 rounded-3xl p-6 shadow-md">
                 <div className="flex flex-col md:flex-row items-start md:items-center gap-5">
                   <div>
@@ -345,24 +343,26 @@ export default function RcmLifecycleCircle() {
                   <div className="flex-1">
                     <h3 className="text-xl font-semibold text-gray-900">{STAGES[selected].title}</h3>
                     <p className="mt-2 text-gray-600">{STAGES[selected].long}</p>
-                    <div className="mt-4 flex gap-3">
-                      <button className="px-5 py-2 rounded-lg bg-indigo-600 text-white shadow-sm hover:brightness-105 transition">
-                        Schedule a free consultation
-                      </button>
-                    </div>
+                    <Link
+                href="/book"
+                className="group inline-flex items-center gap-3 rounded-2xl bg-[#4F46E5] px-6 py-3 text-white font-semibold shadow-lg hover:shadow-2xl transform hover:-translate-y-0.5 transition"
+                aria-label="Schedule a free consultation"
+              >
+                Schedule a free consultation
+                <ArrowRight className="ml-1 h-4 w-4 transform group-hover:translate-x-1 transition" />
+              </Link>
                   </div>
                 </div>
-
                 <hr className="my-4 border-t border-white/50" />
-
                 <div className="hidden md:flex gap-3 flex-wrap">
                   {STAGES.map((s, i) => (
                     <button
                       key={s.id}
                       onClick={() => setSelected(i)}
-                      className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm ${
-                        selected === i ? 'bg-indigo-50 ring-1 ring-indigo-100' : 'bg-gray-50'
-                      } transition`}
+                      className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm
+                        cursor-pointer hover:cursor-grab
+                        ${selected === i ? 'bg-indigo-50 ring-1 ring-indigo-100' : 'bg-gray-50'}
+                        transition`}
                     >
                       <s.Icon className="w-4 h-4 text-indigo-500" />
                       <span>{s.title}</span>
@@ -370,7 +370,6 @@ export default function RcmLifecycleCircle() {
                   ))}
                 </div>
               </div>
-
               <div className="mt-4 text-sm text-gray-500">
                 Tip: Use <span className="font-medium">arrow keys</span> to move, <span className="font-medium">Enter</span> to select.
               </div>
